@@ -1,27 +1,31 @@
-.field{
+.field {
   width: 100vw;
   height: 100vh;
   max-width: 100%;
-  background-image: url('/assets/img/board.jpg');
+  background-image: url("/assets/img/board.jpg");
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.card-stack{
+.card-stack {
   position: relative;
-  img{
+  img {
     position: absolute;
     width: 120px;
   }
 }
-.top-card{
+.top-card {
   cursor: pointer;
   transition: all ease-in-out 150ms;
-  &:hover{
+  &:hover {
     transform: scale(1.1) translateY(-8px);
   }
 }
-.pick-card{
+.played-card {
+  right: 25px;
+  transform: scale(1.4) translateX(140px) translateY(-140px) rotate(-10deg);
+}
+.pick-card {
   animation: pick-card-animation 1s ease-in-out;
   transform: scale(1.4) translateX(140px) translateY(-140px) rotate(-10deg);
 }
@@ -33,10 +37,25 @@
   40% {
     transform: scale(1.4);
   }
-  60%{
+  60% {
     transform: scale(1.4);
   }
-  100%{
+  100% {
     transform: scale(1.4) translateX(140px) translateY(-140px) rotate(-10deg);
   }
+}
+.player-position {
+  position: absolute;
+  right: 0;
+}
+.btn-add {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}
+.pin-bottom {
+  position: absolute;
+  bottom: 32px;
+  left: 120px;
+  right: 120px;
 }
