@@ -22,8 +22,11 @@ export class GameComponent implements OnInit {
     this.dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     this.dialogRef.afterClosed().subscribe((name: string) => {
-      console.log('The dialog was closed', name);
-      this.game.players.push(name);
+      if (name && name.length > 0 && name.length < 16) {
+        this.game.players.push(name);
+      } else {
+        alert('Player name must be between 1 and 16 characters');
+      }
     });
   }
 

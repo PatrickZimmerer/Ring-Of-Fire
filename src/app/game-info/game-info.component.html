@@ -1,4 +1,6 @@
 <mat-card>
-  <mat-card-title>{{ title }}</mat-card-title>
-  <mat-card-content>{{ description }}</mat-card-content>
+  <mat-card-title>{{ card ? title : "Please pick a card" }}</mat-card-title>
+  <mat-card-content>{{
+    card ? description : "Please pick a card from the stack to start"
+  }}</mat-card-content>
 </mat-card>

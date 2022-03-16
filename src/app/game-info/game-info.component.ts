@@ -56,7 +56,6 @@ export class GameInfoComponent implements OnInit, OnChanges {
         'Make a rule. Everyone needs to drink when he breaks the rule.',
     },
   ];
-
   title: string = '';
   description: string = '';
   @Input() card: string;
