@@ -36,17 +36,20 @@ export class GameComponent implements OnInit {
   }
 
   drawCard() {
-    if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop();
-      this.pickCardAnimation = true;
-
-      this.game.currentPlayer++;
-      this.game.currentPlayer =
-        this.game.currentPlayer % this.game.players.length;
-      setTimeout(() => {
-        this.game.playedCards.push(this.currentCard);
-        this.pickCardAnimation = false;
-      }, 1000);
+    if (this.game.players.length > 1) {
+      if (!this.pickCardAnimation) {
+        this.currentCard = this.game.stack.pop();
+        this.pickCardAnimation = true;
+        this.game.currentPlayer++;
+        this.game.currentPlayer =
+          this.game.currentPlayer % this.game.players.length;
+        setTimeout(() => {
+          this.game.playedCards.push(this.currentCard);
+          this.pickCardAnimation = false;
+        }, 1000);
+      }
+    } else {
+      alert('Add at least 2 Players drinking alone is not fun!');
     }
   }
 }

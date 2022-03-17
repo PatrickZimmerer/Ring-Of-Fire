@@ -48,7 +48,7 @@ export class GameInfoComponent implements OnInit, OnChanges {
     {
       title: 'Never have i ever...',
       description:
-        'Say something you nnever did. Everyone who did it has to drink.',
+        'Say something you never did. Everyone who did it has to drink.',
     },
     {
       title: 'Rule',
@@ -56,6 +56,7 @@ export class GameInfoComponent implements OnInit, OnChanges {
         'Make a rule. Everyone needs to drink when he breaks the rule.',
     },
   ];
+  cardNumber;
   title: string = '';
   description: string = '';
   @Input() card: string;
@@ -64,8 +65,10 @@ export class GameInfoComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(): void {
-    let cardNumber = +this.card.split('_')[1];
-    this.title = this.cardAction[cardNumber - 1].title;
-    this.description = this.cardAction[cardNumber - 1].description;
+    if (this.card) {
+      let cardNumber = +this.card.split('_')[1];
+      this.title = this.cardAction[cardNumber - 1].title;
+      this.description = this.cardAction[cardNumber - 1].description;
+    }
   }
 }
