@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditPlayerComponent } from '../edit-player/edit-player.component';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -13,6 +14,7 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
   dialogRef;
+  gameOver = false;
   game!: Game;
   gameId: string;
   constructor(
@@ -33,6 +35,7 @@ export class GameComponent implements OnInit {
           this.game.currentPlayer = game.currentPlayer;
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
+          this.game.playerImages = game.playerImages;
           this.game.stack = game.stack;
           this.game.pickCardAnimation = game.pickCardAnimation;
           this.game.currentCard = game.currentCard;
@@ -45,6 +48,8 @@ export class GameComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0 && name.length < 16) {
         this.game.players.push(name);
+        this.game.playerImages.push('player.png');
+        console.log(this.game.playerImages);
         this.saveGame();
       } else if (name && name.length <= 0 && name.length > 16) {
         alert('Player name must be between 1 and 16 characters');
@@ -61,19 +66,31 @@ export class GameComponent implements OnInit {
       .update(this.game.toJson());
   }
 
+  editPlayer(playerNumber: number) {
+    console.log('Edit player', playerNumber);
+    this.dialogRef = this.dialog.open(EditPlayerComponent);
+    this.dialogRef.afterClosed().subscribe((change: string) => {
+      if (change) {
+        if (change == 'DELETE') {
+          this.game.players.splice(playerNumber, 1);
+          this.game.playerImages.splice(playerNumber, 1);
+          return;
+        }
+        this.game.playerImages[playerNumber] = change;
+        this.saveGame();
+      }
+    });
+  }
   newGame() {
     this.game = new Game();
   }
 
   drawCard() {
-    if (this.game.players.length > 1) {
+    if (this.game.stack.length == 0) {
+      this.gameOver = true;
+    } else if (this.game.players.length > 1) {
       if (!this.game.pickCardAnimation) {
-        this.game.currentCard = this.game.stack.pop();
-        this.game.pickCardAnimation = true;
-        this.game.currentPlayer++;
-        this.game.currentPlayer =
-          this.game.currentPlayer % this.game.players.length;
-        this.saveGame();
+        this.pickCardAction();
         setTimeout(() => {
           this.game.playedCards.push(this.game.currentCard);
           this.game.pickCardAnimation = false;
@@ -83,5 +100,15 @@ export class GameComponent implements OnInit {
     } else {
       alert('Add at least 2 Players drinking alone is not fun!');
     }
+  }
+
+  pickCardAction() {
+    this.game.currentCard = this.game.stack.pop();
+    this.game.pickCardAnimation = true;
+    this.game.currentPlayer++;
+    this.game.currentPlayer =
+      this.game.currentPlayer % this.game.players.length;
+
+    this.saveGame();
   }
 }

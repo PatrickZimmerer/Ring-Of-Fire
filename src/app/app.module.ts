@@ -36,6 +36,8 @@ import {
 } from '@angular/fire/remote-config';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire/compat';
+import { PlayerMobileComponent } from './player-mobile/player-mobile.component';
+import { EditPlayerComponent } from './edit-player/edit-player.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     PlayerComponent,
     DialogAddPlayerComponent,
     GameInfoComponent,
+    PlayerMobileComponent,
+    EditPlayerComponent,
   ],
   imports: [
     BrowserModule,
