@@ -49,7 +49,6 @@ export class GameComponent implements OnInit {
       if (name && name.length > 0 && name.length < 16) {
         this.game.players.push(name);
         this.game.playerImages.push('player.png');
-        console.log(this.game.playerImages);
         this.saveGame();
       } else if (name && name.length <= 0 && name.length > 16) {
         alert('Player name must be between 1 and 16 characters');
@@ -67,7 +66,6 @@ export class GameComponent implements OnInit {
   }
 
   editPlayer(playerNumber: number) {
-    console.log('Edit player', playerNumber);
     this.dialogRef = this.dialog.open(EditPlayerComponent);
     this.dialogRef.afterClosed().subscribe((change: string) => {
       if (change) {
